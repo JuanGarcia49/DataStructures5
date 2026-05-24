@@ -19,9 +19,12 @@ class GestionEmpleados:
 # Creamos una instancia única para gestionar a todos los empleados
 gestion = GestionEmpleados()
 
-def abrir_ventana_registro():
+def abrir_ventana_registro(parent=None):
     """Crea y muestra la ventana principal para el registro de empleados."""
-    registro = tk.Tk()
+    if parent:
+        registro = tk.Toplevel(parent)
+    else:
+        registro = tk.Tk()
     registro.title("Registro y Nómina de Empleados")
     registro.geometry("450x380") # Ajustamos la altura para los campos visibles
     registro.resizable(False, False)
@@ -238,49 +241,6 @@ def abrir_ventana_registro():
     actualizar_salario()
 
     # Inicia el bucle para esta nueva ventana
-    registro.mainloop()
-
-def verificar_contrasena(event=None):
-    """
-    Verifica si la contraseña ingresada en el campo de texto es correcta.
-    El parametro 'event' es para permitir la vinculación con eventos de teclado.
-    """
-    intentos_restantes = int(label_intentos.cget("text").split()[-1])
-    
-    if entry_contrasena.get() == "4682":
-        messagebox.showinfo("Acceso Concedido", "Contraseña correcta. Bienvenido.")
-        ventana.destroy() # Cierra la ventana de login
-        abrir_ventana_registro() # Llama a la función que crea la nueva ventana
-    else:
-        intentos_restantes -= 1
-        if intentos_restantes > 0:
-            messagebox.showwarning("Acceso Denegado", f"Contraseña incorrecta. Le quedan {intentos_restantes} intentos.")
-            label_intentos.config(text=f"Intentos restantes: {intentos_restantes}")
-            entry_contrasena.delete(0, tk.END) # Limpia el campo de contraseña
-        else:
-            messagebox.showerror("Acceso Bloqueado", "Ha superado el número de intentos permitidos.")
-            ventana.destroy() # Cierra la aplicación
-
-# --- Configuración de la Ventana Principal (Login) ---
-ventana = tk.Tk()
-ventana.title("Inicio de Sesion - Gestion De Empleados")
-ventana.geometry("540x200")
-ventana.resizable(False, False)
-
-# --- Creación de Widgets ---
-tk.Label(ventana, text="Ingrese la contraseña de acceso:").pack(pady=10)
-tk.Label(ventana, text="Autor: Juan Pablo Garcia").pack(pady=10)
-
-# Este es el campo de entrada para la contraseña. La opción show="*" oculta el texto.
-entry_contrasena = tk.Entry(ventana, show="*", font=("Helvetica", 12), width=25)
-entry_contrasena.pack(pady=5)
-# Vinculamos la tecla "Enter" (Return) al campo de contraseña para llamar a la función de verificación.
-entry_contrasena.bind('<Return>', verificar_contrasena)
-
-label_intentos = tk.Label(ventana, text="Intentos restantes: 3")
-label_intentos.pack(pady=5)
-
-tk.Button(ventana, text="Ingresar", command=verificar_contrasena, font=("Helvetica", 12)).pack(pady=15)
-
-# Iniciar el bucle de eventos para que la ventana aparezca y sea interactiva
-ventana.mainloop()
+    if not isinstance(registro, tk.Toplevel):
+        registro.mainloop()
+    return registro
