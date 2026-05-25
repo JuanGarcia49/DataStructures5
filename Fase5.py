@@ -11,7 +11,6 @@ def menu_principal():
     ventana_menu.title("Menú Principal — Juan Garcia")
     ventana_menu.geometry("500x420")
     ventana_menu.resizable(False, False)
-    ventana_menu.configure(bg="#f5f6fa")
 
     # Hook the close button of the menu to close the entire application
     def cerrar_todo():
@@ -19,28 +18,24 @@ def menu_principal():
     ventana_menu.protocol("WM_DELETE_WINDOW", cerrar_todo)
 
     # Header Frame
-    header_frame = tk.Frame(ventana_menu, bg="#2c3e50", height=80)
+    header_frame = tk.Frame(ventana_menu, height=80)
     header_frame.pack(fill="x")
     header_frame.pack_propagate(False)
 
     tk.Label(
         header_frame,
         text="ESTRUCTURAS DE DATOS",
-        font=("Helvetica", 16, "bold"),
-        fg="#ecf0f1",
-        bg="#2c3e50"
+        font=("Helvetica", 16, "bold")
     ).pack(pady=(12, 2))
 
     tk.Label(
         header_frame,
         text="Evaluación Final — Menú Principal",
-        font=("Helvetica", 10, "italic"),
-        fg="#bdc3c7",
-        bg="#2c3e50"
+        font=("Helvetica", 10, "italic")
     ).pack()
 
     # Content Frame
-    content_frame = tk.Frame(ventana_menu, bg="#f5f6fa")
+    content_frame = tk.Frame(ventana_menu)
     content_frame.pack(pady=20, fill="both", expand=True, padx=40)
 
     # Launch Actions
@@ -87,7 +82,6 @@ def menu_principal():
     # Buttons
     btn_style = {
         "font": ("Helvetica", 11, "bold"),
-        "fg": "#ffffff",
         "relief": "flat",
         "bd": 0,
         "pady": 8,
@@ -122,14 +116,12 @@ def menu_principal():
     btn_salir.pack(fill="x", pady=(15, 6))
 
     # Footer/Developer Frame
-    footer_frame = tk.Frame(ventana_menu, bg="#f5f6fa")
+    footer_frame = tk.Frame(ventana_menu)
     footer_frame.pack(side="bottom", fill="x", pady=10)
     tk.Label(
         footer_frame,
         text="Estudiante: Juan Garcia  |  Grupo: 301305A_2201",
         font=("Helvetica", 9),
-        fg="#7f8c8d",
-        bg="#f5f6fa"
     ).pack()
 
 
@@ -162,13 +154,12 @@ ventana = tk.Tk()
 ventana.title("Evaluacion Final — Juan Garcia")
 ventana.geometry("500x270")
 ventana.resizable(False, False)
-ventana.configure(bg="#f5f6fa")
 
 # --- Creación de Widgets ---
-tk.Label(ventana, text="EVALUACIÓN FINAL", font=("Helvetica", 14, "bold"), fg="#2c3e50", bg="#f5f6fa").pack(pady=(15, 5))
-tk.Label(ventana, text="Estudiante: Juan Garcia", font=("Helvetica", 10), fg="#7f8c8d", bg="#f5f6fa").pack(pady=2)
-tk.Label(ventana, text="Fecha: 24/05/2026", font=("Helvetica", 10), fg="#7f8c8d", bg="#f5f6fa").pack(pady=2)
-tk.Label(ventana, text="Ingrese la contraseña de acceso:", font=("Helvetica", 11), fg="#2c3e50", bg="#f5f6fa").pack(pady=(10, 5))
+tk.Label(ventana, text="EVALUACIÓN FINAL", font=("Helvetica", 14, "bold")).pack(pady=(15, 5))
+tk.Label(ventana, text="Estudiante: Juan Garcia", font=("Helvetica", 10)).pack(pady=2)
+tk.Label(ventana, text="Fecha: 24/05/2026", font=("Helvetica", 10)).pack(pady=2)
+tk.Label(ventana, text="Ingrese la contraseña de acceso:", font=("Helvetica", 11)).pack(pady=(10, 5))
 
 # Este es el campo de entrada para la contraseña. La opción show="*" oculta el texto.
 entry_contrasena = tk.Entry(ventana, show="*", font=("Helvetica", 12), width=25)
@@ -176,11 +167,11 @@ entry_contrasena.pack(pady=5)
 # Vinculamos la tecla "Enter" (Return) al campo de contraseña para llamar a la función de verificación.
 entry_contrasena.bind('<Return>', verificar_contrasena)
 
-label_intentos = tk.Label(ventana, text="Intentos restantes: 3", font=("Helvetica", 10), fg="#e74c3c", bg="#f5f6fa")
+label_intentos = tk.Label(ventana, text="Intentos restantes: 3", font=("Helvetica", 10))
 label_intentos.pack(pady=5)
 
 # --- Contenedor para los botones ---
-frame_botones = tk.Frame(ventana, bg="#f5f6fa")
+frame_botones = tk.Frame(ventana)
 frame_botones.pack(pady=10)
 
 btn_style = {
@@ -193,21 +184,20 @@ btn_style = {
     "cursor": "hand2"
 }
 
-def crear_boton_login(parent_widget, text, command, bg_color, hover_color):
-    btn = tk.Button(parent_widget, text=text, command=command, bg=bg_color, activebackground=hover_color, activeforeground="white", **btn_style)
-    btn.config(highlightbackground=bg_color)
+def crear_boton_login(parent_widget, text, command):
+    btn = tk.Button(parent_widget, text=text, command=command, bg="#2ecc71", activebackground="#27ae60", activeforeground="white", **btn_style)
     def on_enter(e):
-        btn.config(bg=hover_color, highlightbackground=hover_color)
+        btn.config(bg="#27ae60")
     def on_leave(e):
-        btn.config(bg=bg_color, highlightbackground=bg_color)
+        btn.config(bg="#2ecc71")
     btn.bind("<Enter>", on_enter)
     btn.bind("<Leave>", on_leave)
     return btn
 
-btn_ingresar = crear_boton_login(frame_botones, "Ingresar", verificar_contrasena, "#2ecc71", "#27ae60")
+btn_ingresar = crear_boton_login(frame_botones, "Ingresar", verificar_contrasena)
 btn_ingresar.grid(row=0, column=0, padx=10)
 
-btn_salir = crear_boton_login(frame_botones, "Salir", ventana.destroy, "#e74c3c", "#c0392b")
+btn_salir = crear_boton_login(frame_botones, "Salir", ventana.destroy)
 btn_salir.grid(row=0, column=1, padx=10)
 
 # Iniciar el bucle de eventos para que la ventana aparezca y sea interactiva
