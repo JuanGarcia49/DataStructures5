@@ -16,7 +16,7 @@ class GestionEmpleados:
         print(empleado_data)
         print(f"Total de registros actuales: {len(self.empleados)}")
 
-# Creamos una instancia única para gestionar a todos los empleados
+# Creamos una instancia unica para gestionar a todos los empleados
 gestion = GestionEmpleados()
 
 def abrir_ventana_registro(parent=None):
