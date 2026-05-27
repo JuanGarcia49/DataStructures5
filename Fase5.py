@@ -84,23 +84,13 @@ def menu_principal():
         "font": ("Helvetica", 11, "bold"),
         "relief": "flat",
         "bd": 0,
-        "pady": 8,
-        "cursor": "hand2"
+        "pady": 8
     }
 
     # Custom button generator to add hover effects easily in vanilla Tkinter
     def crear_boton(parent_widget, text, command, bg_color, hover_color):
-        btn = tk.Button(parent_widget, text=text, command=command, bg=bg_color, activebackground=hover_color, activeforeground="white", **btn_style)
+        btn = tk.Button(parent_widget, text=text, command=command, bg=bg_color, **btn_style)
         btn.config(highlightbackground=bg_color)
-        
-        # Hover effect functions
-        def on_enter(e):
-            btn.config(bg=hover_color, highlightbackground=hover_color)
-        def on_leave(e):
-            btn.config(bg=bg_color, highlightbackground=bg_color)
-            
-        btn.bind("<Enter>", on_enter)
-        btn.bind("<Leave>", on_leave)
         return btn
 
     btn_fase2 = crear_boton(content_frame, "Fase 2: Registro de Empleados", lanzar_fase2, "#2980b9", "#3498db")
@@ -158,7 +148,7 @@ ventana.resizable(False, False)
 # --- Creación de Widgets ---
 tk.Label(ventana, text="EVALUACIÓN FINAL", font=("Helvetica", 14, "bold")).pack(pady=(15, 5))
 tk.Label(ventana, text="Estudiante: Juan Garcia", font=("Helvetica", 10)).pack(pady=2)
-tk.Label(ventana, text="Fecha: 24/05/2026", font=("Helvetica", 10)).pack(pady=2)
+tk.Label(ventana, text="Fecha: 26/05/2026", font=("Helvetica", 10)).pack(pady=2)
 tk.Label(ventana, text="Ingrese la contraseña de acceso:", font=("Helvetica", 11)).pack(pady=(10, 5))
 
 # Este es el campo de entrada para la contraseña. La opción show="*" oculta el texto.
@@ -176,16 +166,14 @@ frame_botones.pack(pady=10)
 
 btn_style = {
     "font": ("Helvetica", 11, "bold"),
-    "fg": "white",
     "relief": "flat",
     "bd": 0,
     "padx": 15,
-    "pady": 6,
-    "cursor": "hand2"
+    "pady": 6
 }
 
 def crear_boton_login(parent_widget, text, command):
-    btn = tk.Button(parent_widget, text=text, command=command, bg="#2ecc71", activebackground="#27ae60", activeforeground="white", **btn_style)
+    btn = tk.Button(parent_widget, text=text, command=command, **btn_style)
     def on_enter(e):
         btn.config(bg="#27ae60")
     def on_leave(e):
